@@ -51,6 +51,39 @@ $(document).ready(function () {
     renumberColumns();
   });
 
+  // === 移动行 Start ==========================================
+  // 上移
+  $(document).on('click', '.move-rows-up', function () {
+    const row = $(this).closest('tr');
+    const prevRow = row.prev();
+    if (prevRow.length) {
+      row.insertBefore(prevRow);
+      updateButtons();
+    }
+  });
+  // 下移
+  $(document).on('click', '.move-rows-down', function () {
+    const row = $(this).closest('tr');
+    const nextRow = row.next();
+    if (nextRow.length) {
+      row.insertAfter(nextRow);
+      updateButtons();
+    }
+  });
+  // 更新按钮状态（禁用第一行的上移和最后一行的下移）
+  function updateButtons() {
+    const rows = $('#dataTable tr:not(:first)'); // 排除表头
+    const rowCount = rows.length;
+    rows.each(function (index) {
+      $(this).find('.move-rows-up').prop('disabled', index === 0);
+      $(this).find('.move-rows-down').prop('disabled', index === rowCount - 1);
+    });
+  }
+  // === 移动行 End ==========================================
+
+  // === 移动列 Start ==========================================
+  // === 移动列 End ==========================================
+
   // 添加新行
   function addNewRow() {
     let dataCells = '';
@@ -67,12 +100,15 @@ $(document).ready(function () {
             <option value ="max">Max</option>
             <option value ="min">Min</option>
           </select>
+          <button class="move-rows-up">&uarr;</button>
+          <button class="move-rows-down">&darr;</button>
           <button class="delete-btn">❌</button>
         </td>
       </tr>
     `;
     $('#dataTable tbody').append(newRow);
-    bindDeleteEvents();
+    bindDeleteEvents(); // 初始绑定删除事件
+    updateButtons(); // 初始化按钮状态
   }
 
   // 添加新列
@@ -202,10 +238,6 @@ $(document).ready(function () {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
-
-
-
-
   // 导入数据
   function importData() {
     const fileInput = document.getElementById('importFile');
@@ -281,7 +313,7 @@ $(document).ready(function () {
 
     reader.readAsText(file);
   }
-
-  // 初始绑定删除事件
-  bindDeleteEvents();
+  
+  bindDeleteEvents(); // 初始绑定删除事件
+  updateButtons(); // 初始化按钮状态
 });
