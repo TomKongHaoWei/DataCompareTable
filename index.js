@@ -59,12 +59,18 @@ $(document).ready(function () {
     }
 
     const newRow = `
-                    <tr>
-                        <td><input type="text" class="name-input"></td>
-                        ${dataCells}
-                        <td><button class="delete-btn">❌</button></td>
-                    </tr>
-                `;
+      <tr>
+        <td><input type="text" class="name-input"></td>
+        ${dataCells}
+        <td>
+          <select class="compareMode">
+            <option value ="max">Max</option>
+            <option value ="min">Min</option>
+          </select>
+          <button class="delete-btn">❌</button>
+        </td>
+      </tr>
+    `;
     $('#dataTable tbody').append(newRow);
     bindDeleteEvents();
   }
@@ -76,13 +82,13 @@ $(document).ready(function () {
 
     // 添加表头
     const headerHtml = `
-                    <th>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <input type="text" class="header-input" value="数据${newColumnIndex}">
-                            <button class="delete-column-btn" data-index="${newColumnIndex}">❌</button>
-                        </div>
-                    </th>
-                `;
+      <th>
+        <div style="display: flex; align-items: center; gap: 5px;">
+          <input type="text" class="header-input" value="数据${newColumnIndex}">
+          <button class="delete-column-btn" data-index="${newColumnIndex}">❌</button>
+        </div>
+      </th>
+    `;
     // 插入到操作列前面
     $('#dataTable thead tr th:last-child').before(headerHtml);
 
@@ -120,20 +126,28 @@ $(document).ready(function () {
 
     // 遍历每一行
     $('#dataTable tbody tr').each(function () {
-      const row = $(this);
-      const inputs = row.find('.data-input');
-      let maxValue = -Infinity;
-      // let maxInput = null;
+      const row = $(this); // 行
+      const compareMode = row.find('.compareMode').val(); // 比较模式
+      const inputs = row.find('.data-input'); // 
+      let targetValue = -Infinity;
+
       // 找到最大值
       inputs.each(function () {
         const value = parseFloat($(this).val()) || 0;
-        if (value > maxValue) maxValue = value;
+        
+        if (targetValue === -Infinity) targetValue = value;
+
+        if (compareMode === 'max') {
+          if (value > targetValue) targetValue = value;
+        } else if (compareMode === 'min') {
+          if (value < targetValue) targetValue = value;
+        }
       });
 
       // 设置最大值背景色
       inputs.each(function () {
         const value = parseFloat($(this).val()) || 0;
-        if (value === maxValue) $(this).css('background-color', '#90ee90');
+        if (value === targetValue) $(this).css('background-color', '#90ee90');
       });
     });
   }
