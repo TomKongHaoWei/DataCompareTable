@@ -1,58 +1,14 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DataCompare</title>
-  <link rel="icon" href="./favicon.svg" type="image/x-icon">
-  <script src="./jquery-3.5.1.min.js"></script>
-  <link rel="stylesheet" href="./index.css">
-</head>
-<body>
-  <div class="operation-box" style="margin-bottom: 10px;">
-    <button id="addColumnBtn">➕列</button>
-    <button id="addRowBtn">➕行</button>
-    <button id="compareBtn">🆚 比较</button>
-    <button id="exportBtn">💾导出数据</button>
-    <label for="importFile" class="custom-file-upload">📥导入数据</label>
-    <input type="file" id="importFile" accept=".json">
-  </div>
-  <table border="1" id="dataTable">
-    <thead>
-      <tr>
-        <th>名称</th>
-        <th>
-          <div style="display: flex; align-items: center; gap: 5px;">
-            <input type="text" class="header-input" value="数据1">
-            <button class="delete-column-btn" data-index="1">❌</button>
-          </div>
-        </th>
-        <th>
-          <div style="display: flex; align-items: center; gap: 5px;">
-            <input type="text" class="header-input" value="数据2">
-            <button class="delete-column-btn" data-index="2">❌</button>
-          </div>
-        </th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><input type="text" class="name-input"></td>
-        <td><input type="number" class="data-input" data-index="1"></td>
-        <td><input type="number" class="data-input" data-index="2"></td>
-        <td>
-          <select class="compareMode">
-            <option value ="max">Max</option>
-            <option value ="min">Min</option>
-          </select>
-          <button class="move-rows-up">&uarr;</button>
-          <button class="move-rows-down">&darr;</button>
-          <button class="delete-btn">❌</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <script src="./index.js"></script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="./favicon.svg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据比较</title>
+    <script type="module" crossorigin src="./assets/index-BwqKy_ye.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DNl357aF.css">
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
 </html>
